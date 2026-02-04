@@ -6,68 +6,72 @@
 
 <title>404 → Valentine 💘</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 * {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
-  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.7s ease;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .container {
+  background: rgba(255,255,255,0.95);
+  border-radius: 28px;
+  padding: 40px 30px;
   width: 92%;
   max-width: 420px;
-  background: rgba(255,255,255,0.96);
-  border-radius: 26px;
-  padding: 42px 28px;
   text-align: center;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 .screen {
-  opacity: 0;
-  transform: translateY(18px);
-  pointer-events: none;
-  transition: all 0.6s cubic-bezier(.22,.61,.36,1);
+  display: none;
 }
 
 .screen.active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+  display: block;
 }
 
 h1 {
-  font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 p {
   color: #555;
-  margin-bottom: 26px;
 }
 
 button {
   border: none;
-  padding: 14px 34px;
   border-radius: 999px;
+  padding: 14px 34px;
   font-size: 17px;
   cursor: pointer;
-  transition: all 0.35s ease;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.16);
-  touch-action: manipulation;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.18);
+  transition: transform 0.3s ease;
 }
 
 button:active {
@@ -76,36 +80,31 @@ button:active {
 
 .refresh {
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  color: #fff;
+  color: white;
 }
 
 .buttons {
+  margin-top: 28px;
   display: flex;
   justify-content: center;
-  gap: 16px;
-  margin-top: 28px;
+  gap: 18px;
+  position: relative;
 }
 
 .yes {
   background: linear-gradient(135deg, #43e97b, #38f9d7);
-  color: #fff;
+  color: white;
 }
 
 .no {
   background: linear-gradient(135deg, #fa709a, #fee140);
-  color: #fff;
-  position: relative;
-}
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.8);
+  color: white;
+  position: absolute;
 }
 
 .message {
   display: none;
-  margin-top: 26px;
+  margin-top: 24px;
 }
 
 .message ul {
@@ -123,15 +122,7 @@ button:active {
 }
 
 @keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(720deg);
-  }
-}
-
-/* Mobile tweaks */
-@media (max-width: 480px) {
-  h1 { font-size: 22px; }
-  button { font-size: 16px; padding: 14px 30px; }
+  to { transform: translateY(110vh) rotate(720deg); }
 }
 </style>
 </head>
@@ -143,7 +134,7 @@ button:active {
   <!-- 404 -->
   <div id="screen404" class="screen active">
     <h1>404 💔</h1>
-    <p>Page Not Found<br>But love might be...</p>
+    <p>Page not found…<br>but maybe love is.</p>
     <button class="refresh" onclick="showValentine()">Refresh</button>
   </div>
 
@@ -153,7 +144,7 @@ button:active {
 
     <div class="buttons" id="buttons">
       <button class="yes" onclick="yesClicked()">YES</button>
-      <button class="no" id="noBtn" onclick="noClicked()">NO 😏</button>
+      <button class="no" id="noBtn">NO 😏</button>
     </div>
 
     <div class="message" id="message">
@@ -162,7 +153,7 @@ button:active {
         <li>Unlimited cuddles</li>
         <li>Lifetime happiness</li>
         <li>Teeny tiny craziness</li>
-        <li>Traveling the world (again 🙄🙄)</li>
+        <li>Traveling the world 🙄🙄</li>
       </ul>
       <p><strong>Effective immediately!</strong></p>
     </div>
@@ -171,70 +162,55 @@ button:active {
 </div>
 
 <script>
-let noClicks = 0;
-const noBtn = document.getElementById('noBtn');
+let noClickedOnce = false;
+const noBtn = document.getElementById("noBtn");
 const body = document.body;
-const chaosTexts = ["NO 😏","Try again","Missed 😈","LOL nope","Almost 😉","😜","😈"];
 
 function showValentine() {
-  document.getElementById('screen404').classList.remove('active');
-  setTimeout(() => {
-    document.getElementById('screenValentine').classList.add('active');
-  }, 400);
+  document.getElementById("screen404").classList.remove("active");
+  document.getElementById("screenValentine").classList.add("active");
 }
 
 function yesClicked() {
-  document.getElementById('message').style.display = 'block';
-  setTimeout(() => {
-    document.getElementById('buttons').classList.add('hidden');
-  }, 1000);
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("message").style.display = "block";
   launchConfetti();
 }
 
-function noClicked() {
-  noClicks++;
+function moveNoButton() {
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 120);
 
-  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
-  const rotate = Math.random() * 720 - 360;
-  const scale = 0.8 + Math.random() * 0.6;
-
-  noBtn.style.position = 'fixed';
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
-  noBtn.style.transform = `rotate(${rotate}deg) scale(${scale})`;
-
-  noBtn.innerText = chaosTexts[Math.floor(Math.random() * chaosTexts.length)];
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+  noBtn.style.transform = `rotate(${Math.random()*360}deg) scale(${0.8 + Math.random()*0.6})`;
 
   body.style.background = `linear-gradient(135deg,
-    hsl(${Math.random()*360},75%,80%),
-    hsl(${Math.random()*360},75%,70%))`;
-
-  if (navigator.vibrate) navigator.vibrate(30);
-
-  // Occasional clone chaos
-  if (noClicks % 3 === 0) {
-    const clone = noBtn.cloneNode(true);
-    clone.style.left = Math.random() * maxX + 'px';
-    clone.style.top = Math.random() * maxY + 'px';
-    clone.style.opacity = '0.6';
-    document.body.appendChild(clone);
-    setTimeout(() => clone.remove(), 600);
-  }
+    hsl(${Math.random()*360},80%,75%),
+    hsl(${Math.random()*360},80%,65%))`;
 }
 
-function launchConfetti() {
-  const colors = ['#ff5f6d','#ffc371','#47cf73','#6a82fb','#fc5c7d'];
+// RUN AWAY FROM MOUSE
+noBtn.addEventListener("mouseenter", moveNoButton);
 
-  for (let i = 0; i < 150; i++) {
-    const c = document.createElement('div');
-    c.className = 'confetti';
-    c.style.left = Math.random() * 100 + 'vw';
+// IF SHE MANAGES TO CLICK IT
+noBtn.addEventListener("click", () => {
+  if (!noClickedOnce) {
+    noClickedOnce = true;
+    noBtn.innerText = "💔";
+  }
+  moveNoButton();
+});
+
+// CONFETTI
+function launchConfetti() {
+  const colors = ["#ff5f6d","#ffc371","#47cf73","#6a82fb","#fc5c7d"];
+  for (let i = 0; i < 160; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100 + "vw";
     c.style.background = colors[Math.floor(Math.random()*colors.length)];
-    c.style.animationDuration = 2 + Math.random()*3 + 's';
+    c.style.animationDuration = 2 + Math.random()*3 + "s";
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 5000);
   }
