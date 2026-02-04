@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>404 → Valentine 💘</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.7s ease;
+}
+
+.container {
+  width: 92%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.96);
+  border-radius: 26px;
+  padding: 42px 28px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+}
+
+.screen {
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(.22,.61,.36,1);
+}
+
+.screen.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+h1 {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+p {
+  color: #555;
+  margin-bottom: 26px;
+}
+
+button {
+  border: none;
+  padding: 14px 34px;
+  border-radius: 999px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+  touch-action: manipulation;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.refresh {
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: #fff;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.yes {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+  color: #fff;
+}
+
+.no {
+  background: linear-gradient(135deg, #fa709a, #fee140);
+  color: #fff;
+  position: relative;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+}
+
+.message {
+  display: none;
+  margin-top: 26px;
+}
+
+.message ul {
+  text-align: left;
+  padding-left: 18px;
+}
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  h1 { font-size: 22px; }
+  button { font-size: 16px; padding: 14px 30px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- 404 -->
+  <div id="screen404" class="screen active">
+    <h1>404 💔</h1>
+    <p>Page Not Found<br>But love might be...</p>
+    <button class="refresh" onclick="showValentine()">Refresh</button>
+  </div>
+
+  <!-- Valentine -->
+  <div id="screenValentine" class="screen">
+    <h1>Will you be my Valentine? 💘</h1>
+
+    <div class="buttons" id="buttons">
+      <button class="yes" onclick="yesClicked()">YES</button>
+      <button class="no" id="noBtn" onclick="noClicked()">NO 😏</button>
+    </div>
+
+    <div class="message" id="message">
+      <p><strong>By clicking YES you agree to:</strong></p>
+      <ul>
+        <li>Unlimited cuddles</li>
+        <li>Lifetime happiness</li>
+        <li>Teeny tiny craziness</li>
+        <li>Traveling the world (again 🙄🙄)</li>
+      </ul>
+      <p><strong>Effective immediately!</strong></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let noClicks = 0;
+const noBtn = document.getElementById('noBtn');
+const body = document.body;
+const chaosTexts = ["NO 😏","Try again","Missed 😈","LOL nope","Almost 😉","😜","😈"];
+
+function showValentine() {
+  document.getElementById('screen404').classList.remove('active');
+  setTimeout(() => {
+    document.getElementById('screenValentine').classList.add('active');
+  }, 400);
+}
+
+function yesClicked() {
+  document.getElementById('message').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('buttons').classList.add('hidden');
+  }, 1000);
+  launchConfetti();
+}
+
+function noClicked() {
+  noClicks++;
+
+  const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+  const rotate = Math.random() * 720 - 360;
+  const scale = 0.8 + Math.random() * 0.6;
+
+  noBtn.style.position = 'fixed';
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
+  noBtn.style.transform = `rotate(${rotate}deg) scale(${scale})`;
+
+  noBtn.innerText = chaosTexts[Math.floor(Math.random() * chaosTexts.length)];
+
+  body.style.background = `linear-gradient(135deg,
+    hsl(${Math.random()*360},75%,80%),
+    hsl(${Math.random()*360},75%,70%))`;
+
+  if (navigator.vibrate) navigator.vibrate(30);
+
+  // Occasional clone chaos
+  if (noClicks % 3 === 0) {
+    const clone = noBtn.cloneNode(true);
+    clone.style.left = Math.random() * maxX + 'px';
+    clone.style.top = Math.random() * maxY + 'px';
+    clone.style.opacity = '0.6';
+    document.body.appendChild(clone);
+    setTimeout(() => clone.remove(), 600);
+  }
+}
+
+function launchConfetti() {
+  const colors = ['#ff5f6d','#ffc371','#47cf73','#6a82fb','#fc5c7d'];
+
+  for (let i = 0; i < 150; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration = 2 + Math.random()*3 + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
+}
+</script>
+
+</body>
+</html>
