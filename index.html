@@ -3,69 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 <title>Valentine 💘</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; font-family:'Poppins',sans-serif }
+* { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
 body {
-  margin: 0; height:100vh; overflow:hidden;
-  display:flex; justify-content:center; align-items:center;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee);
-  background-size:400% 400%; animation:bgMove 8s ease infinite;
+  background-size: 400% 400%;
+  animation: bgMove 12s ease infinite;
 }
+
 @keyframes bgMove {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
+
 .container {
-  background:rgba(255,255,255,0.96); border-radius:28px;
-  padding:40px 30px; max-width:420px; width:90%;
-  text-align:center; box-shadow:0 30px 80px rgba(0,0,0,0.2)
+  background: rgba(255,255,255,0.96);
+  border-radius: 28px;
+  padding: 40px 30px;
+  width: 92%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 35px 90px rgba(0,0,0,0.25);
+  animation: breathe 4s ease-in-out infinite;
 }
-.screen { display:none }
-.screen.active { display:block }
+
+@keyframes breathe {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.01); }
+}
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+h1 { margin-bottom: 14px; }
+
+p { color: #555; }
+
 button {
-  border:none; border-radius:999px; padding:14px 34px;
-  font-size:17px; cursor:pointer;
-  box-shadow:0 12px 26px rgba(0,0,0,0.18);
-  transition: transform .2s ease;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 34px;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.2);
+  transition: transform .25s ease, box-shadow .25s ease;
 }
-button:active { transform:scale(.97) }
-.refresh { background:linear-gradient(135deg,#ff758c,#ff7eb3); color:#fff }
-.buttons { margin-top:30px; position:relative; height:120px }
-.yes { background:linear-gradient(135deg,#43e97b,#38f9d7); color:#fff }
+
+button:active { transform: scale(.96); }
+
+.refresh {
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  color: #fff;
+}
+
+.buttons {
+  margin-top: 30px;
+  position: relative;
+  height: 120px;
+}
+
+.yes {
+  background: linear-gradient(135deg,#43e97b,#38f9d7);
+  color: #fff;
+  animation: yesGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes yesGlow {
+  0%,100% { box-shadow: 0 0 0 rgba(67,233,123,0.6); }
+  50% { box-shadow: 0 0 18px rgba(67,233,123,0.8); }
+}
+
 .no {
-  background:linear-gradient(135deg,#fa709a,#fee140);
-  color:#fff; position:absolute; left:50%; transform:translateX(-50%);
+  background: linear-gradient(135deg,#fa709a,#fee140);
+  color: #fff;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
-.message { display:none; margin-top:26px }
-.message ul { text-align:left; padding-left:18px }
-.confetti {
-  position:fixed; width:8px; height:8px; top:-10px;
-  animation:fall linear infinite
+
+.no.wiggle {
+  animation: wiggle .4s infinite;
 }
-@keyframes fall { to{transform:translateY(110vh) rotate(720deg)} }
-.shake { animation:shake .4s }
+
+@keyframes wiggle {
+  0% { transform: translateX(-50%) rotate(0); }
+  25% { transform: translateX(-50%) rotate(2deg); }
+  75% { transform: translateX(-50%) rotate(-2deg); }
+}
+
+.shake {
+  animation: shake .35s;
+}
+
 @keyframes shake {
-  0%{transform:translate(0)}
-  25%{transform:translate(-8px,4px)}
-  50%{transform:translate(8px,-4px)}
-  75%{transform:translate(-6px,-6px)}
-  100%{transform:translate(0)}
+  0% { transform: translate(0); }
+  25% { transform: translate(-6px,4px); }
+  50% { transform: translate(6px,-4px); }
+  75% { transform: translate(-4px,-6px); }
+  100% { transform: translate(0); }
+}
+
+.message { display: none; margin-top: 26px; }
+.message ul { text-align: left; padding-left: 18px; }
+
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(720deg); }
 }
 </style>
 </head>
+
 <body>
 
 <div class="container" id="container">
 
+  <!-- 404 -->
   <div id="screen404" class="screen active">
     <h1>404 💔</h1>
-    <p>Page not found… maybe love is.</p>
+    <p>Page not found…<br>but maybe love is.</p>
     <button class="refresh" onclick="showValentine()">Refresh</button>
   </div>
 
+  <!-- Valentine -->
   <div id="screenValentine" class="screen">
     <h1>Will you be my Valentine? 💘</h1>
 
@@ -75,7 +154,7 @@ button:active { transform:scale(.97) }
     </div>
 
     <div class="message" id="message">
-      <p><strong>By clicking YES you agree to:</strong></p>
+      <p><strong>You just agreed to:</strong></p>
       <ul>
         <li>Unlimited cuddles</li>
         <li>Lifetime happiness</li>
@@ -89,78 +168,82 @@ button:active { transform:scale(.97) }
 </div>
 
 <script>
+let chaosEnabled = false;
 let noClicks = 0;
-const noBtn = document.getElementById("noBtn");
-const container = document.getElementById("container");
-const body = document.body;
 
-// Show Valentine screen
+const noBtn = document.getElementById("noBtn");
+const body = document.body;
+const container = document.getElementById("container");
+
+// Show Valentine
 function showValentine() {
   document.getElementById("screen404").classList.remove("active");
   document.getElementById("screenValentine").classList.add("active");
+
+  // Grace period before chaos
+  setTimeout(() => {
+    noBtn.classList.add("wiggle");
+  }, 2000);
 }
 
-// YES logic
+// YES
 function yesClicked() {
   document.querySelector(".buttons").style.display = "none";
   document.getElementById("message").style.display = "block";
   launchConfetti();
 }
 
-// Extreme NO logic
-function extremeNo(e) {
-  noClicks++;
-  
-  // First click change text
-  if (noClicks === 1) {
-    noBtn.innerText = "💔";
-  } else {
-    noBtn.innerText = ["😈","LOL NO","TRY AGAIN","💢"][Math.floor(Math.random()*4)];
-  }
+// Move NO
+function moveNo() {
+  if (!chaosEnabled) return;
 
-  // Wild movement
   const x = Math.random() * (window.innerWidth - 120);
   const y = Math.random() * (window.innerHeight - 120);
-  const r = Math.random() * 1080;
-  const s = 0.6 + Math.random()*1.8;
+  const r = Math.random() * 720;
+  const s = 0.7 + Math.random() * 1.1;
 
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
   noBtn.style.transform = `rotate(${r}deg) scale(${s})`;
 
-  // Flash and shake
-  body.style.background = `hsl(${Math.random()*360},90%,85%)`;
+  body.style.background = `hsl(${Math.random()*360},85%,85%)`;
   container.classList.add("shake");
-  setTimeout(()=> container.classList.remove("shake"),350);
-
-  // spawn clones sometimes
-  if (Math.random() > 0.5) {
-    const clone = noBtn.cloneNode(true);
-    clone.style.opacity = ".4";
-    document.body.appendChild(clone);
-    setTimeout(()=> clone.remove(), 700);
-  }
+  setTimeout(()=>container.classList.remove("shake"),300);
 }
 
-// Run away from mouse
-function avoidCursor(e) {
-  const mx = e.clientX || (e.touches && e.touches[0].clientX);
-  const my = e.clientY || (e.touches && e.touches[0].clientY);
+// Hover / touch = activate chaos
+noBtn.addEventListener("mouseenter", () => {
+  chaosEnabled = true;
+  moveNo();
+});
+noBtn.addEventListener("touchstart", () => {
+  chaosEnabled = true;
+  moveNo();
+});
 
-  const rect = noBtn.getBoundingClientRect();
-  const dx = rect.x + rect.width/2 - mx;
-  const dy = rect.y + rect.height/2 - my;
-  const dist = Math.sqrt(dx*dx+dy*dy);
+// Click NO
+noBtn.addEventListener("click", () => {
+  chaosEnabled = true;
+  noClicks++;
+  if (noClicks === 1) noBtn.innerText = "💔";
+  else noBtn.innerText = ["😈","NOPE","LOL","TRY AGAIN"][Math.floor(Math.random()*4)];
+  moveNo();
+});
 
-  if (dist < 150) {
-    extremeNo(e);
+// Confetti
+function launchConfetti() {
+  const colors = ["#ff5f6d","#ffc371","#47cf73","#6a82fb","#fc5c7d"];
+  for (let i = 0; i < 160; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration = 2 + Math.random()*3 + "s";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
   }
 }
-
-noBtn.addEventListener("mousemove", avoidCursor);
-noBtn.addEventListener("click", extremeNo);
-noBtn.addEventListener("touchstart", avoidCursor);
-noBtn.style.left = "50%";  // center first
 </script>
+
 </body>
 </html>
